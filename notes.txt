@@ -1,0 +1,17 @@
+Create Database-Dev
+
+Upgrade to Firebase SDK 3.
+
+
+Server Side:
+ 1. Full Access Database;
+ 2. Generate Login Token to client
+    require: Email, Password, Type.
+ 3. Modify User Information.
+ 4. Create Note, Class, Homework.
+ 5. Change Note, Class, Homework.
+
+Client:
+ 1. Read Global Data
+ 2. Read User Information
+ 3. Read user_ list

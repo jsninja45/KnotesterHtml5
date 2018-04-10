@@ -1,0 +1,40 @@
+.note {
+    margin: 5px;
+    width: 320px;
+    height: 270px;
+    float: left;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000;
+}
+
+.block-grid {
+    display: block;
+    overflow: hidden;
+    padding: 0
+}
+
+#annotation {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 85%;
+    z-index: 1; 
+    border: 0px solid #000000;
+}
+
+.video-js {
+    padding-top: 56.25%;
+}
+
+.new-bookmark {
+    margin-bottom: 20px;
+}
+
+.vjs-nofull .vjs-fullscreen-control {
+    display:none;
+}

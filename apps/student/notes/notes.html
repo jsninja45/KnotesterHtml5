@@ -1,0 +1,116 @@
+<link href="css/student/notes.css" rel="stylesheet">
+<div class="container">
+  <div id="notes-modal" class="notes-modal-class modal fade" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h3 class="modal-title" id="modal-title">{{vm.note.className}}</h3>
+          </div>
+          <div class="modal-body" id="modal-body">
+              <!-- <pre>{{ vm.note | json }}</pre> -->
+              <div class="container-fluid">
+                  <div class="row">
+                    <!-- Video -->
+                    <div id="videodiv" class="col-lg-9 col-lg-push-3">
+                        <div class="embed-responsive embed-responsive-16by9">
+                          <canvas id="annotation"></canvas>
+                          <video id="Video" class="video-js vjs-default-skin vjs-nofull vjs-fullscreen-control" height="auto" width="auto" controls autoplay> </video>
+                        </div>
+                        <!-- Annotation controls -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h2>{{vm.note.title}}</h2>
+                            </div>
+                            <span class="col-lg-4 pull-left">
+                              <button type="button" class="btn btn-primary" ng-click="vm.SaveAnnotations()">Save Annotations </button>
+                            </span>
+                            <span class="col-lg-8 pull-right">
+                                <div class="dropdown col-lg-5 col-lg-offset-2">
+                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Color : {{vm.AnnotationColor}} <span class="caret"></span></button>
+                                  <ul class="dropdown-menu" role="menu">
+                                    <li ng-click="vm.SetAnnotationColor('Red')"> Red</li>
+                                    <li ng-click="vm.SetAnnotationColor('Cyan')"> Cyan</li>
+                                    <li ng-click="vm.SetAnnotationColor('Magenta')"> Magenta</li>
+                                    <li ng-click="vm.SetAnnotationColor('Green')"> Green</li>
+                                    <li ng-click="vm.SetAnnotationColor('Orange')"> Orange</li>
+                                  </ul>
+                                </div>
+                                <div class="dropdown col-lg-5">
+                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Thickness : {{vm.AnnotationThickness}}  <span class="caret"></span></button>
+                                  <ul class="dropdown-menu" role="menu">
+                                    <li ng-click="vm.SetAnnotationThickness(1)"> 1</li>
+                                    <li ng-click="vm.SetAnnotationThickness(2)"> 2</li>
+                                    <li ng-click="vm.SetAnnotationThickness(3)"> 3</li>
+                                    <li ng-click="vm.SetAnnotationThickness(4)"> 4</li>
+                                    <li ng-click="vm.SetAnnotationThickness(8)"> 8</li>
+                                    <li ng-click="vm.SetAnnotationThickness(15)"> 15</li>
+                                    <li ng-click="vm.SetAnnotationThickness(30)"> 30</li>
+                                  </ul>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- bookmark toolbar -->
+                    <div class="col-lg-3 col-lg-pull-9">
+                        <div class="row">
+                            <div class="dropdown">
+                                <button class="btn btn-success dropdown-toggle new-bookmark"
+                                        type="button" data-toggle="dropdown">New Bookmark
+                                  <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                  <li class="list-group-item list-group-item-success" ng-click="vm.SaveBookmark('test')">Test</li>
+                                  <li class="list-group-item list-group-item-info"    ng-click="vm.SaveBookmark('review')">Review</li>
+                                  <li class="list-group-item list-group-item-warning" ng-click="vm.SaveBookmark('question')">Question</li>
+                                  <li class="list-group-item list-group-item-danger"  ng-click="vm.SaveBookmark('important')">Important</li>
+                                  <li class="list-group-item list-group-item-success" ng-click="vm.SaveBookmark('audio')">Audio</li>
+                                </ul>
+                            </div>
+                        </div>
+                      <div class="row">
+                          <ul class="list-group">
+                            <div ng-repeat="bookmark in vm.bookmarks">
+                              <li class="{{bookmark.htmlClass}}" ng-click="vm.SetVideoTime(bookmark.position)">
+                                <img src="{{bookmark.icon}}" height="16" width="16">
+                                {{bookmark.type}}
+                                <span class="badge">Min: {{bookmark.min}}
+                                                    Sec: {{bookmark.sec}}</span>
+                              </li>
+                            </div>
+                          </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
+          <div class="modal-footer">
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+<div class="input-group" style="max-width:500px;margin-bottom:10px;">
+    <input type="text" ng-model="searchText" class="form-control" placeholder="Search for...">
+    <span class="input-group-btn">
+      <button class="btn btn-default" ng-show="searchText" type="button" ng-click='searchText ="" '>Clear</button>
+    </span>
+</div>
+<!-- /input-group -->
+<div>
+    <ul infinite-scroll='vm.loadMoreNotes()' infinite-scroll-distance='1' class='block-grid'>
+        <div class="note" ng-repeat='note in vm.noteList | filter:searchText' ng-click="vm.noteClickHandle(note)" 
+        id="{{vm.getNoteId(note)}}">
+            <span style="font-weight:bold;">{{$index}} -- {{note.title}}</span>
+            <br>{{note.className}}
+            <br>{{note.createdOn | date:'fullDate'}}
+            <img ng-src="{{note.coverFullUrl}}" style="width:318px;height:180px;" />
+            <br>{{note.videoLengthStr}}
+        </div>
+    </ul>
+</div>
+<script src="../js/student/notes.js"></script>
